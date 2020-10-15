@@ -274,9 +274,6 @@ function configure_manila {
     # To enable it, specify its name explicitly using "enabled_share_backends" opt.
     configure_default_backends
     default_backends=$MANILA_BACKEND1_CONFIG_GROUP_NAME
-    if [ "$MANILA_MULTI_BACKEND" = "True" ]; then
-        default_backends+=,$MANILA_BACKEND2_CONFIG_GROUP_NAME
-    fi
     if [ ! $MANILA_ENABLED_BACKENDS ]; then
         # If $MANILA_ENABLED_BACKENDS is not set, use configured backends by default
         export MANILA_ENABLED_BACKENDS=$default_backends
@@ -1008,7 +1005,6 @@ function remove_docker_service_image {
 
 
 function install_libraries {
-    if [ $(trueorfalse False MANILA_MULTI_BACKEND) == True ]; then
         if [ $(trueorfalse True RUN_MANILA_HOST_ASSISTED_MIGRATION_TESTS) == True ]; then
             if is_ubuntu; then
                 install_package nfs-common
@@ -1016,7 +1012,6 @@ function install_libraries {
                 install_package nfs-utils
             fi
         fi
-    fi
 }
 
 function allow_host_ports_for_share_mounting {
