@@ -266,14 +266,15 @@ function configure_manila {
     if is_service_enabled glance; then
         configure_keystone_authtoken_middleware $MANILA_CONF glance glance
     fi
+    if [ ! $MANILA_ENABLED_BACKENDS ]; then
+        # If $MANILA_ENABLED_BACKENDS is not set, no default can be used
+        echo 'No backends has been defined'
+        exit 1
+    fi
     # Note: set up config group does not mean that this backend will be enabled.
     # To enable it, specify its name explicitly using "enabled_share_backends" opt.
     configure_default_backends
-    default_backends=$MANILA_BACKEND1_CONFIG_GROUP_NAME
-    if [ ! $MANILA_ENABLED_BACKENDS ]; then
-        # If $MANILA_ENABLED_BACKENDS is not set, use configured backends by default
-        export MANILA_ENABLED_BACKENDS=$default_backends
-    fi
+    
     iniset $MANILA_CONF DEFAULT enabled_share_backends $MANILA_ENABLED_BACKENDS
 
     if [ ! -f $MANILA_PATH_TO_PRIVATE_KEY ]; then
