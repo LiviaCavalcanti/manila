@@ -142,24 +142,6 @@ MANILA_SERVICE_VM_FLAVOR_RAM=${MANILA_SERVICE_VM_FLAVOR_RAM:-320}
 MANILA_SERVICE_VM_FLAVOR_DISK=${MANILA_SERVICE_VM_FLAVOR_DISK:-3}
 MANILA_SERVICE_VM_FLAVOR_VCPUS=${MANILA_SERVICE_VM_FLAVOR_VCPUS:-1}
 
-# Support for multi backend configuration (default is no support)
-MANILA_MULTI_BACKEND=$(trueorfalse False MANILA_MULTI_BACKEND)
-DEPRECATED_TEXT="$DEPRECATED_TEXT\n'MANILA_MULTI_BACKEND' is deprecated,
-    it makes influence only when is set to True and 'MANILA_ENABLED_BACKENDS' is not set.
-    Use 'MANILA_ENABLED_BACKENDS' instead if you want to use custom setting.
-    Set there a list of back end names to be enabled.\n
-    To configure custom back ends use (any opt in any group can be set in this way) following:
-    MANILA_OPTGROUP_foo_bar=value
-    where 'foo' is name of config group and 'bar' is name of option.\n"
-
-# First share backend data, that will be used in any installation
-MANILA_BACKEND1_CONFIG_GROUP_NAME=${MANILA_BACKEND1_CONFIG_GROUP_NAME:-generic1}  # deprecated
-MANILA_SHARE_BACKEND1_NAME=${MANILA_SHARE_BACKEND1_NAME:-GENERIC1}  # deprecated
-
-# Second share backend data, that will be used only with MANILA_MULTI_BACKEND=True
-MANILA_BACKEND2_CONFIG_GROUP_NAME=${MANILA_BACKEND2_CONFIG_GROUP_NAME:-generic2}  # deprecated
-MANILA_SHARE_BACKEND2_NAME=${MANILA_SHARE_BACKEND2_NAME:-GENERIC2}  # deprecated
-
 # Enable this option when using a storage backend that is on the same host
 # as the devstack host, these iptable rules are necessary to allow mounting
 # shares from the host
