@@ -274,7 +274,6 @@ function configure_manila {
     # Note: set up config group does not mean that this backend will be enabled.
     # To enable it, specify its name explicitly using "enabled_share_backends" opt.
     configure_default_backends
-    
     iniset $MANILA_CONF DEFAULT enabled_share_backends $MANILA_ENABLED_BACKENDS
 
     if [ ! -f $MANILA_PATH_TO_PRIVATE_KEY ]; then
