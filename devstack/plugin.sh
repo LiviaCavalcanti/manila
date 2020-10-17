@@ -84,13 +84,9 @@ function _config_manila_apache_wsgi {
 # configure_default_backends - configures default Manila backends with generic driver.
 function configure_default_backends {
     # Configure two default backends with generic drivers onboard
-    for group_name in $MANILA_BACKEND1_CONFIG_GROUP_NAME $MANILA_BACKEND2_CONFIG_GROUP_NAME; do
+    for group_name in $(echo $MANILA_ENABLED_BACKENDS | sed "s/,/ /g"); do
         iniset $MANILA_CONF $group_name share_driver $SHARE_DRIVER
-        if [ "$MANILA_BACKEND1_CONFIG_GROUP_NAME" == "$group_name" ]; then
-            iniset $MANILA_CONF $group_name share_backend_name $MANILA_SHARE_BACKEND1_NAME
-        else
-            iniset $MANILA_CONF $group_name share_backend_name $MANILA_SHARE_BACKEND2_NAME
-        fi
+        iniset $MANILA_CONF $group_name share_backend_name $group_name
         iniset $MANILA_CONF $group_name path_to_public_key $MANILA_PATH_TO_PUBLIC_KEY
         iniset $MANILA_CONF $group_name path_to_private_key $MANILA_PATH_TO_PRIVATE_KEY
         iniset $MANILA_CONF $group_name service_image_name $MANILA_SERVICE_IMAGE_NAME
